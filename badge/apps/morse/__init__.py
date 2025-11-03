@@ -22,8 +22,7 @@ MORSE_CODE = {
 }
 
 # Timing constants (in milliseconds)
-SHORT_PRESS_THRESHOLD = 300  # Less than this is a dot
-LONG_PRESS_THRESHOLD = 300   # More than this is a dash
+DOT_DASH_THRESHOLD = 300     # Less than this is a dot, >= is a dash
 CHAR_GAP_THRESHOLD = 800     # Gap to recognize end of character
 WORD_GAP_THRESHOLD = 1500    # Gap to recognize word space
 
@@ -52,7 +51,7 @@ def update():
     if io.BUTTON_A in io.released and button_press_start is not None:
         press_duration = io.ticks - button_press_start
         
-        if press_duration < SHORT_PRESS_THRESHOLD:
+        if press_duration < DOT_DASH_THRESHOLD:
             current_pattern += "."
         else:
             current_pattern += "-"
@@ -130,7 +129,7 @@ def draw_ui():
             display_pattern = current_pattern
             screen.brush = brushes.color(150, 255, 150)
     else:
-        display_pattern = "---"
+        display_pattern = "..."
         screen.brush = brushes.color(80, 100, 100)
     
     pw, _ = screen.measure_text(display_pattern)
